@@ -12,8 +12,8 @@ My first assumption was that ... this should just work. :) :) :) Clang says it s
 Update to the above paragraph ... it appears that LLVM is trying to add support to lld (their linker). This is really important because the temporary solution of using an undocumented flag to build ld64 with tapi support does not work with tapi-v3. I tried using this repo to build with an SDK from Mojave and it fails cause it can't recognize the file format. It does work with earlier SDKs.
 
 I imagine that I will refine things as I go a bit here. Just wanted to check it in and track my progress and understanding.
+Here is the CL that was checked in (but later reverted because of some Windows failures) that appears to have added support for this to llvm: https://github.com/llvm-mirror/llvm/commit/b075bab277fe1bf441f3fd08cc64b3f72c883509#diff-e7f334b489b133199af6b7256b72349a
 
-Follow this thread to see when lld will get support for tapi which will make things much easier (if Apple will help maintain it)
 ========================================================
 Actual steps needed to use this
 clone the git repo locally
