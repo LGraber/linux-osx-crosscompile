@@ -8,3 +8,10 @@ My end goal is to have a Linux-based docker image which I can use as a base imag
 My first assumption was that ... this should just work. :) :) :) Clang says it supports cross compiling so I figured ... here we go. I created an image with Ubunut:18.04 and put clang & cmake on there and tried to build a simple "Hello World"'esque program. After a couple of fixes in my cmake toolchain file, some path fixes, and such, I found that lld was not linking. I was getting an error about "can't find libc++". Well ... libc++.tbd (text based dylib definition) was definitely in the path. After a bunch of reading, I tried simply copying libc++.tbd -> libc++.dylib and seeing if that did anything. I got a new error about libSystem not being found. This tells me that (a) the path was fine, (b) the linker understands dylibs even though I am on Linux and (c) the linker did not understand tbd files. I was pretty confused and then I started searching the internet and if your Google Foo is strong you can search for "llvm tapi lld" and find that discussions are still on going to add this support (annoying). When it is added, I bet I can simplify this stuff even further. In the meantime, I need a linker that can understand tbd files. Fortunately Apple has cctools which appears to provide this. Besides some comments on the osxcross repo, I cannot find any Apple documentation on this source. Annoying again. Building this, though, has given me a set of tools (ld64 included) that I was able to use to build a simple HelloWorld-esque app on my Linux container and run on my mac. 
 
 I imagine that I will refine things as I go a bit here. Just wanted to check it in and track my progress and understanding.
+
+Follow this thread to see when lld will get support for tapi which will make things much easier (if Apple will help maintain it)
+========================================================
+Actual steps needed to use this
+clone the git repo locally
+cd to linux-osx-crosscompile
+docker image build --tag "name" .
